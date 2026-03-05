@@ -1,0 +1,17 @@
+# Visual Studio
+.vs/
+.idea/
+
+# Unity generated
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+UserSettings/
+
+# VS/Unity generated project files (tùy, có thể bỏ)
+*.csproj
+*.sln
+*.user
