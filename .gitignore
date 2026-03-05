@@ -1,8 +1,4 @@
-# Visual Studio
-.vs/
-.idea/
-
-# Unity generated
+# ===== Unity =====
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
@@ -10,8 +6,33 @@
 [Bb]uilds/
 [Ll]ogs/
 UserSettings/
+MemoryCaptures/
+Recordings/
 
-# VS/Unity generated project files (tùy, có thể bỏ)
+# Asset meta data should only be ignored when the corresponding asset is also ignored
+# (do NOT ignore *.meta)
+
+# ===== Visual Studio / Rider / VSCode =====
+.vs/
+.idea/
+.vscode/
+
+# ===== Unity generated / IDE files =====
 *.csproj
+*.unityproj
 *.sln
+*.suo
+*.tmp
 *.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# ===== OS junk =====
+.DS_Store
+Thumbs.db
