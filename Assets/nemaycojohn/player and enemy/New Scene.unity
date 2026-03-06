@@ -119,11 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!95 &399085094 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5495293811822652523, guid: ed03ad45838e569489badf0551595228, type: 3}
-  m_PrefabInstance: {fileID: 3895425090092340489}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &468114240
 GameObject:
   m_ObjectHideFlags: 0
@@ -1901,7 +1896,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 15
-      m_TileSpriteIndex: 10
+      m_TileSpriteIndex: 11
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -4186,10 +4181,10 @@ Tilemap:
     m_Data: {fileID: 1932705319, guid: 3e3a8eb84db62874ebd2cd92e348e97e, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: 6360217670390750199, guid: 3e3a8eb84db62874ebd2cd92e348e97e, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: 1740494032, guid: 3e3a8eb84db62874ebd2cd92e348e97e, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 1740494032, guid: 3e3a8eb84db62874ebd2cd92e348e97e, type: 3}
   - m_RefCount: 11
     m_Data: {fileID: -1442837886, guid: 3e3a8eb84db62874ebd2cd92e348e97e, type: 3}
   - m_RefCount: 5
@@ -7967,33 +7962,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!1 &1814266978 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8749821988805463862, guid: 406e28e9ff36c414fb7bcd1234644d40, type: 3}
-  m_PrefabInstance: {fileID: 5464819098889619108}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1814266984
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1814266978}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7eab20bb5a6318d478f8a2bd42ff2ff4, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1900756921
 GameObject:
   m_ObjectHideFlags: 0
@@ -9290,10 +9258,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1731851549692451368, guid: ed03ad45838e569489badf0551595228, type: 3}
-      propertyPath: animator
-      value: 
-      objectReference: {fileID: 399085094}
     - target: {fileID: 3550902808443530550, guid: ed03ad45838e569489badf0551595228, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -9351,6 +9315,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4882439493024888111, guid: 406e28e9ff36c414fb7bcd1234644d40, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 2093504586}
     - target: {fileID: 8749821988805463862, guid: 406e28e9ff36c414fb7bcd1234644d40, type: 3}
       propertyPath: m_Name
       value: PatrolEnemy
@@ -9398,10 +9366,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8749821988805463862, guid: 406e28e9ff36c414fb7bcd1234644d40, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1814266984}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 406e28e9ff36c414fb7bcd1234644d40, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
