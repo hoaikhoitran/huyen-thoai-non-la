@@ -123,7 +123,7 @@ public class Player : MonoBehaviour
     {
         if(other.gameObject.tag == "VictoryPoint")
         {
-            Debug.Log("You Win!");
+            FindObjectOfType<ScenceManager>().LoadLevel();
         }
     }
 

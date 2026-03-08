@@ -4,6 +4,6 @@ public class ScenceManager : MonoBehaviour
 {
     public void LoadLevel()
     {
-        ScenceManager.LoadScene("Lv2");
+        SceneManager.LoadScene("Lv2");
     }
 }
