@@ -1,7 +1,10 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    public int maxHealth = 3;
+    public Text health;
     public Animator animator;
     public Rigidbody2D rb;
     public float jumpHeight = 5f;
@@ -10,6 +13,9 @@ public class Player : MonoBehaviour
     private bool faceingRight = true;
     public bool isGround = true;
 
+    public Transform attackPoint;
+    public float attackRadius = 1f;
+    public LayerMask attackLayer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -19,6 +25,12 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(maxHealth <= 0)
+        {
+            Die();
+        }
+        health.text = maxHealth.ToString();
+
         movement = Input.GetAxis("Horizontal");
 
         if(movement < 0f && faceingRight)
@@ -74,6 +86,52 @@ public class Player : MonoBehaviour
             isGround = true;
             animator.SetBool("Jump", false);
         }
+    }
+
+    public void Attack() 
+    {
+        Collider2D collInfo = Physics2D.OverlapCircle(attackPoint.position, attackRadius, attackLayer);
+        if(collInfo)       
+        {
+            if(collInfo.GetComponent<PatrolEnemy>() != null)
+            {
+                collInfo.GetComponent<PatrolEnemy>().TakeDamege(1);
+            }
+        }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        if(attackPoint == null)
+        {
+            return;
+        }
+        Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
+    }
+
+    public void TakeDamege(int damage)
+    {
+        if(maxHealth <= 0)
+        {
+            return;
+        }
+        maxHealth -= damage;
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.tag == "VictoryPoint")
+        {
+            Debug.Log("You Win!");
+        }
+    }
+
+    void Die()
+    {
+        Debug.Log("Player Died");
+        FindObjectOfType<GameManager>().isGameActive = false;
+        Destroy(this.gameObject);
     }
 
 }

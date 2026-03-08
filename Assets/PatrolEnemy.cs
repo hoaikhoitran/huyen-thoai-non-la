@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PatrolEnemy : MonoBehaviour
 {
+    public int maxHealth = 3;
     public bool faceingLeft = true;
     public float moveSpeed = 2f;
     public Transform checkPoint;
@@ -27,6 +28,16 @@ public class PatrolEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if(FindObjectOfType<GameManager>().isGameActive == false)
+        {
+            return;
+        }
+
+        if (maxHealth <= 0)
+        {
+            Die();
+        }
         if (Vector2.Distance(transform.position, player.position) <= attackRange)
         {
             inRange = true;
@@ -54,7 +65,8 @@ public class PatrolEnemy : MonoBehaviour
             {
                 animator.SetBool("Attack1", false);
 
-                transform.position = Vector2.MoveTowards(transform.position,                player.position, chaseSpeed * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(transform.position,  
+                    player.position, chaseSpeed * Time.deltaTime);
             }
             else
             {
@@ -84,7 +96,24 @@ public class PatrolEnemy : MonoBehaviour
 
     public void Attack()
     { 
-        //Physics2D.OverlapCircle
+        Collider2D collInfo = Physics2D.OverlapCircle(attackPoint.position, attackRadius, attackLayer);
+
+        if (collInfo)
+        {
+            if (collInfo.gameObject.GetComponent<Player>() != null) 
+            {
+                collInfo.gameObject.GetComponent<Player>().TakeDamege(1);
+            }
+        }
+    }
+
+    public void TakeDamege(int damage)
+    {
+        if (maxHealth <= 0)
+        {
+            return;
+        }
+        maxHealth -= damage;
     }
 
     private void OnDrawGizmosSelected()
@@ -98,6 +127,19 @@ public class PatrolEnemy : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+
+        if(attackPoint == null)
+        {
+            return;
+        }
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
+    }
+
+    void Die()
+    {
+        Debug.Log(this.transform.name + " Die");
+        Destroy(this.gameObject);
     }
 
 }
