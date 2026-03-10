@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -124,6 +125,8 @@ public class Player : MonoBehaviour
         if(other.gameObject.tag == "VictoryPoint")
         {
             //FindObjectOfType<>().LoadLevel();
+            SceneManager.LoadScene("Win");
+
         }
     }
 
@@ -132,6 +135,7 @@ public class Player : MonoBehaviour
         Debug.Log("Player Died");
         FindObjectOfType<GameManager>().isGameActive = false;
         Destroy(this.gameObject);
+        SceneManager.LoadScene("Lose");
     }
 
 }
