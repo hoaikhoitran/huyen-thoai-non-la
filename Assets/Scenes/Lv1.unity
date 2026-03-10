@@ -12178,7 +12178,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8407176252872381934, guid: 68a6dee6f3497fb408aac5475bb3a6b1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.29
       objectReference: {fileID: 0}
     - target: {fileID: 8407176252872381934, guid: 68a6dee6f3497fb408aac5475bb3a6b1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -14272,7 +14272,7 @@ PrefabInstance:
       objectReference: {fileID: 956662929}
     - target: {fileID: 1731851549692451368, guid: ed03ad45838e569489badf0551595228, type: 3}
       propertyPath: maxHealth
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1731851549692451368, guid: ed03ad45838e569489badf0551595228, type: 3}
       propertyPath: attackPoint
