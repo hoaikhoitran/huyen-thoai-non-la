@@ -841,7 +841,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4114377535924471807, guid: 99df590076307e942ba0906943eaddf9, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.00012207031
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4114377535924471807, guid: 99df590076307e942ba0906943eaddf9, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -956,6 +956,26 @@ PrefabInstance:
     - target: {fileID: 1757491970481428402, guid: 200d5de8f451bf44bb413f9ef1f35b9b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3325359922326791786, guid: 200d5de8f451bf44bb413f9ef1f35b9b, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3325359922326791786, guid: 200d5de8f451bf44bb413f9ef1f35b9b, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1061626185}
+    - target: {fileID: 3325359922326791786, guid: 200d5de8f451bf44bb413f9ef1f35b9b, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: set_volume
+      objectReference: {fileID: 0}
+    - target: {fileID: 3325359922326791786, guid: 200d5de8f451bf44bb413f9ef1f35b9b, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.AudioSource, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3325359922326791786, guid: 200d5de8f451bf44bb413f9ef1f35b9b, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5037450459017767047, guid: 200d5de8f451bf44bb413f9ef1f35b9b, type: 3}
       propertyPath: m_AnchorMax.x
