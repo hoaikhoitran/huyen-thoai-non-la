@@ -13,6 +13,10 @@ public class Player : MonoBehaviour
     public float movementSpeed = 5f;
     private bool faceingRight = true;
     public bool isGround = true;
+    private AudioSource playerAudio;
+    public AudioClip jumpSound;
+    public AudioClip attackSound;
+    public AudioClip takeDamageSound;
 
     public Transform attackPoint;
     public float attackRadius = 1f;
@@ -20,7 +24,7 @@ public class Player : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        playerAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -78,6 +82,7 @@ public class Player : MonoBehaviour
     void Jump()
     {
         rb.AddForce(new Vector2(0f, jumpHeight), ForceMode2D.Impulse);
+        playerAudio.PlayOneShot(jumpSound, 1.0f);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -92,11 +97,13 @@ public class Player : MonoBehaviour
     public void Attack() 
     {
         Collider2D collInfo = Physics2D.OverlapCircle(attackPoint.position, attackRadius, attackLayer);
-        if(collInfo)       
+        playerAudio.PlayOneShot(attackSound, 1.0f);
+        if (collInfo)       
         {
             if(collInfo.GetComponent<PatrolEnemy>() != null)
             {
                 collInfo.GetComponent<PatrolEnemy>().TakeDamege(1);
+                playerAudio.PlayOneShot(takeDamageSound, 1.0f);
             }
         }
     }
@@ -117,6 +124,7 @@ public class Player : MonoBehaviour
             return;
         }
         maxHealth -= damage;
+        playerAudio.PlayOneShot(takeDamageSound, 1.0f);
 
     }
 
