@@ -14363,6 +14363,10 @@ PrefabInstance:
       propertyPath: health
       value: 
       objectReference: {fileID: 956662929}
+    - target: {fileID: 1731851549692451368, guid: ed03ad45838e569489badf0551595228, type: 3}
+      propertyPath: jumpSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 0ae68af45cfb28f4d971184e1c638d29, type: 3}
     - target: {fileID: 3550902808443530550, guid: ed03ad45838e569489badf0551595228, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.18
