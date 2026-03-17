@@ -5,6 +5,6 @@ public class SceneManagerMent : MonoBehaviour
 {
     public void PlayGame()
     {
-        SceneManager.LoadScene("Lv1");
+        SceneManager.LoadScene("IntroVideo");
     }
 }
