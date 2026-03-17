@@ -3,6 +3,8 @@ using UnityEngine;
 public class PatrolEnemy : MonoBehaviour
 {
     public int maxHealth = 3;
+    public int attackDamage = 1;
+    public float attackCooldown = 1f;
     public bool faceingLeft = true;
     public float moveSpeed = 2f;
     public Transform checkPoint;
@@ -18,6 +20,7 @@ public class PatrolEnemy : MonoBehaviour
     public Transform attackPoint;
     public float attackRadius = 1f;
     public LayerMask attackLayer;
+    private float nextAttackTime;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -71,6 +74,7 @@ public class PatrolEnemy : MonoBehaviour
             else
             {
                 animator.SetBool("Attack1", true);
+                Attack();
             }
         }
         else
@@ -96,14 +100,29 @@ public class PatrolEnemy : MonoBehaviour
 
     public void Attack()
     { 
+        if (Time.time < nextAttackTime)
+        {
+            return;
+        }
+
+        nextAttackTime = Time.time + attackCooldown;
+
+        Player targetPlayer = null;
         Collider2D collInfo = Physics2D.OverlapCircle(attackPoint.position, attackRadius, attackLayer);
 
         if (collInfo)
         {
-            if (collInfo.gameObject.GetComponent<Player>() != null) 
-            {
-                collInfo.gameObject.GetComponent<Player>().TakeDamege(1);
-            }
+            targetPlayer = collInfo.gameObject.GetComponent<Player>();
+        }
+
+        if (targetPlayer == null && player != null && Vector2.Distance(transform.position, player.position) <= retrieveDistance + 0.2f)
+        {
+            targetPlayer = player.GetComponent<Player>();
+        }
+
+        if (targetPlayer != null)
+        {
+            targetPlayer.TakeDamege(attackDamage);
         }
     }
 

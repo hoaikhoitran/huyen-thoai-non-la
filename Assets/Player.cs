@@ -5,7 +5,9 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     public int maxHealth = 3;
+    private int currentHealth;
     public Text health;
+    public HealthBar healthBar;
     public Animator animator;
     public Rigidbody2D rb;
     public float jumpHeight = 5f;
@@ -25,16 +27,17 @@ public class Player : MonoBehaviour
     void Start()
     {
         playerAudio = GetComponent<AudioSource>();
+        currentHealth = maxHealth;
+        UpdateHealthUI();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(maxHealth <= 0)
+        if(currentHealth <= 0)
         {
             Die();
         }
-        health.text = maxHealth.ToString();
 
         movement = Input.GetAxis("Horizontal");
 
@@ -119,13 +122,28 @@ public class Player : MonoBehaviour
 
     public void TakeDamege(int damage)
     {
-        if(maxHealth <= 0)
+        if(currentHealth <= 0)
         {
             return;
         }
-        maxHealth -= damage;
+        currentHealth -= damage;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         playerAudio.PlayOneShot(takeDamageSound, 1.0f);
+        UpdateHealthUI();
 
+    }
+
+    private void UpdateHealthUI()
+    {
+        if (health != null)
+        {
+            health.text = currentHealth.ToString();
+        }
+
+        if (healthBar != null)
+        {
+            healthBar.UpdateBar(currentHealth, maxHealth);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
