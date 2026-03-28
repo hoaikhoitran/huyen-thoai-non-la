@@ -55,5 +55,14 @@ TagManager:
   - name: Grass
     uniqueID: 965130825
     locked: 0
+  - name: New Layer 5
+    uniqueID: 682528143
+    locked: 0
+  - name: New Layer 6
+    uniqueID: 3897849401
+    locked: 0
+  - name: Player
+    uniqueID: 385242523
+    locked: 0
   m_RenderingLayers:
   - Default

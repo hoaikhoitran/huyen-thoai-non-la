@@ -1,100 +1,129 @@
 using UnityEngine;
+using System.Collections; // ?ã thêm ?? h?t l?i IEnumerator
 
 public class PatrolEnemy : MonoBehaviour
 {
+    [Header("Ch? s? c? b?n")]
     public int maxHealth = 3;
+<<<<<<< Updated upstream
     public bool faceingLeft = true;
+=======
+    public int attackDamage = 1;
+    public float attackCooldown = 1.5f;
+>>>>>>> Stashed changes
     public float moveSpeed = 2f;
+    public float chaseSpeed = 4f;
+
+    [Header("Ph?m vi nh?n bi?t")]
+    public Transform player;
+    public float attackRange = 10f;
+    public float stopDistance = 1.5f;
+    public bool inRange = false;
+
+    [Header("Ki?m tra v?c th?m (Patrol)")]
     public Transform checkPoint;
     public float distance = 1f;
     public LayerMask layerMask;
-    public bool inRange = false;
-    public Transform player;
-    public float attackRange = 10f;
-    public float retrieveDistance = 2.5f;
-    public float chaseSpeed = 4f;
-    public Animator animator;
+    private bool faceingLeft = true;
 
+    [Header("T?n công")]
+    public Animator animator;
     public Transform attackPoint;
-    public float attackRadius = 1f;
+    public float attackRadius = 0.8f;
     public LayerMask attackLayer;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [Header("V?t lý & ??y lùi")]
+    public Rigidbody2D rb;
+    public float knockbackForce = 10f;
+
+    private GameManager gameManager; // L?u t?m ?? t?i ?u hi?u su?t
+
     void Start()
     {
-        
+        // Tìm GameManager m?t l?n duy nh?t lúc b?t ??u ?? tránh t?n tài nguyên
+        gameManager = Object.FindFirstObjectByType<GameManager>();
+
+        if (rb == null) rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-
-        if(FindObjectOfType<GameManager>().isGameActive == false)
-        {
+        // 1. Ki?m tra tr?ng thái Game
+        if (gameManager != null && !gameManager.isGameActive)
             return;
-        }
 
-        if (maxHealth <= 0)
+        // 2. Ki?m tra máu
+        if (maxHealth <= 0) { Die(); return; }
+
+        // 3. Tính kho?ng cách t?i Player
+        if (player != null)
         {
-            Die();
-        }
-        if (Vector2.Distance(transform.position, player.position) <= attackRange)
-        {
-            inRange = true;
-        }
-        else 
-        {  
-            inRange = false;
-        }
+            float distToPlayer = Vector2.Distance(transform.position, player.position);
+            inRange = distToPlayer <= attackRange;
 
-        if (inRange == true)
-        {
-
-            if(player.position.x > transform.position.x && faceingLeft == true)
+            if (inRange)
             {
-                transform.eulerAngles = new Vector3(0, -180, 0);
-                faceingLeft = false;
-            }
-            else if(player.position.x < transform.position.x && faceingLeft == false)
-            {
-                transform.eulerAngles = new Vector3(0, 0, 0);
-                faceingLeft = true;
-            }
-
-            if (Vector2.Distance(transform.position, player.position) > retrieveDistance)
-            {
-                animator.SetBool("Attack1", false);
-
-                transform.position = Vector2.MoveTowards(transform.position,  
-                    player.position, chaseSpeed * Time.deltaTime);
+                HandleChase(distToPlayer);
             }
             else
             {
+<<<<<<< Updated upstream
                 animator.SetBool("Attack1", true);
+=======
+                HandlePatrol();
+>>>>>>> Stashed changes
             }
         }
         else
         {
-            transform.Translate(Vector2.left * Time.deltaTime * moveSpeed);
+            HandlePatrol(); // N?u không th?y Player thì c? ?i tu?n
+        }
+    }
 
-            RaycastHit2D hit = Physics2D.Raycast(checkPoint.position, Vector2.down, distance, layerMask);
+    // Logic ?u?i theo
+    void HandleChase(float distToPlayer)
+    {
+        if (player.position.x > transform.position.x && faceingLeft) { Flip(); }
+        else if (player.position.x < transform.position.x && !faceingLeft) { Flip(); }
 
-            if (hit == false && faceingLeft)
+        if (distToPlayer > stopDistance)
+        {
+            // ?ang ?u?i theo
+            animator.SetBool("Attack1", false);
+            animator.SetFloat("Run", 1f); // ??m b?o ?ã có bi?n 'Run' trong Animator
+
+            // Ch? di chuy?n theo tr?c X
+            Vector2 target = new Vector2(player.position.x, transform.position.y);
+            transform.position = Vector2.MoveTowards(transform.position, target, chaseSpeed * Time.deltaTime);
+        }
+        else
+        {
+            // ?ã ??n g?n -> T?n công
+            animator.SetFloat("Run", 0f);
+            if (Time.time >= nextAttackTime)
             {
-                transform.eulerAngles = new Vector3(0, -180, 0);
-                faceingLeft = false;
-            }
-            else if (hit == false && faceingLeft == false)
-            {
-                transform.eulerAngles = new Vector3(0, 0, 0);
-                faceingLeft = true;
+                Attack();
             }
         }
+    }
 
-        
+    // Logic Tu?n tra (Tránh r?i xu?ng v?c)
+    void HandlePatrol()
+    {
+        animator.SetFloat("Run", 1f);
+        transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
+
+        RaycastHit2D hit = Physics2D.Raycast(checkPoint.position, Vector2.down, distance, layerMask);
+        Debug.DrawRay(checkPoint.position, Vector2.down * distance, Color.red);
+
+        if (hit.collider == null)
+        {
+            Flip();
+        }
     }
 
     public void Attack()
+<<<<<<< Updated upstream
     { 
         Collider2D collInfo = Physics2D.OverlapCircle(attackPoint.position, attackRadius, attackLayer);
 
@@ -103,43 +132,67 @@ public class PatrolEnemy : MonoBehaviour
             if (collInfo.gameObject.GetComponent<Player>() != null) 
             {
                 collInfo.gameObject.GetComponent<Player>().TakeDamege(1);
+=======
+    {
+        nextAttackTime = Time.time + attackCooldown;
+        animator.SetTrigger("Attack1");
+
+        Collider2D hitPlayer = Physics2D.OverlapCircle(attackPoint.position, attackRadius, attackLayer);
+        if (hitPlayer != null)
+        {
+            Player p = hitPlayer.GetComponent<Player>();
+            if (p != null)
+            {
+                p.TakeDamege(attackDamage); // Kh?p v?i hàm TakeDamege trong Player.cs
+>>>>>>> Stashed changes
             }
         }
     }
 
     public void TakeDamege(int damage)
     {
-        if (maxHealth <= 0)
-        {
-            return;
-        }
         maxHealth -= damage;
+        Debug.Log("Quái b? chém! Máu còn: " + maxHealth);
+
+        // X? lý Knockback (??y lùi)
+        if (rb != null && player != null)
+        {
+            Vector2 knockbackDirection = (transform.position - player.position).normalized;
+            rb.linearVelocity = Vector2.zero;
+            rb.AddForce(new Vector2(knockbackDirection.x, 0.2f) * knockbackForce, ForceMode2D.Impulse);
+        }
+
+        StartCoroutine(FlashRed());
     }
 
-    private void OnDrawGizmosSelected()
+    void Flip()
     {
-        if(checkPoint == null)
-        {
-            return;
-        }
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawRay(checkPoint.position, Vector2.down * distance);
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
-
-        if(attackPoint == null)
-        {
-            return;
-        }
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
+        faceingLeft = !faceingLeft;
+        transform.Rotate(0, 180, 0);
     }
 
     void Die()
     {
-        Debug.Log(this.transform.name + " Die");
-        Destroy(this.gameObject);
+        // Có th? Instantiate hi?u ?ng khói ? ?ây tr??c khi Destroy
+        Destroy(gameObject);
     }
 
+    private void OnDrawGizmosSelected()
+    {
+        if (checkPoint) Gizmos.DrawRay(checkPoint.position, Vector2.down * distance);
+        if (attackPoint) Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
+
+    IEnumerator FlashRed()
+    {
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            sr.color = Color.red;
+            yield return new WaitForSeconds(0.1f);
+            sr.color = Color.white;
+        }
+    }
 }
